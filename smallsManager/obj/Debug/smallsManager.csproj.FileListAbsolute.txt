@@ -4,11 +4,9 @@ d:\Code\smallsManager\smallsManager\bin\Debug\smallsManager.exe
 d:\Code\smallsManager\smallsManager\bin\Debug\smallsManager.pdb
 d:\Code\smallsManager\smallsManager\bin\Debug\NAudio.dll
 d:\Code\smallsManager\smallsManager\bin\Debug\NLog.dll
-d:\Code\smallsManager\smallsManager\bin\Debug\Utilities.IO.dll
 d:\Code\smallsManager\smallsManager\bin\Debug\NAudio.xml
 d:\Code\smallsManager\smallsManager\bin\Debug\NLog.xml
-d:\Code\smallsManager\smallsManager\bin\Debug\Utilities.IO.pdb
-d:\Code\smallsManager\smallsManager\bin\Debug\Utilities.IO.xml
 d:\Code\smallsManager\smallsManager\obj\Debug\smallsManager.csprojResolveAssemblyReference.cache
 d:\Code\smallsManager\smallsManager\obj\Debug\smallsManager.exe
 d:\Code\smallsManager\smallsManager\obj\Debug\smallsManager.pdb
+D:\Code\smallsManager\smallsManager\bin\Debug\Sound\chime-mid.mp3

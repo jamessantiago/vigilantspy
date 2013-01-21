@@ -4,6 +4,7 @@ using System.Linq;
 using System.ServiceProcess;
 using System.Text;
 using System.Threading.Tasks;
+using NLog;
 
 namespace smallsManager
 {
@@ -14,12 +15,22 @@ namespace smallsManager
         /// </summary>
         static void Main()
         {
-            ServiceBase[] ServicesToRun;
-            ServicesToRun = new ServiceBase[] 
-            { 
-                new MainService() 
-            };
-            ServiceBase.Run(ServicesToRun);
+            Logger logger = LogManager.GetLogger("Program");
+            logger.Info("smalls manager is starting up");
+            if (Environment.UserInteractive)
+            {
+                MainService service = new MainService();
+                service.Start();
+            }
+            else
+            {
+                ServiceBase[] ServicesToRun;
+                ServicesToRun = new ServiceBase[] 
+                { 
+                    new MainService() 
+                };
+                ServiceBase.Run(ServicesToRun);
+            }
         }
     }
 }
