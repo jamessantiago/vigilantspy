@@ -28,8 +28,7 @@ namespace smallsManager
         public void Start()
         {
             OnStart(null);
-            while (true)
-                System.Threading.Thread.Sleep(500);
+            
         }
 
         protected override void OnStart(string[] args)
@@ -47,18 +46,24 @@ namespace smallsManager
             {
                 mainTimer = new System.Timers.Timer(30000);
                 mainTimer.Elapsed += new System.Timers.ElapsedEventHandler(ForcedTimer_Elapsed);
-                mainTimer.Start();
-                ForcedTimer_Elapsed(null, null);
+                mainTimer.Start();                
             }
         }
 
-        private async void ForcedTimer_Elapsed(object state, System.Timers.ElapsedEventArgs e)
+        private void ForcedTimer_Elapsed(object state, System.Timers.ElapsedEventArgs e)
         {
-            
-            mainOutputStream = CreateInputStream("Sound\\chime-mid.mp3");
-            wasapiOutDevice = new WasapiOut(NAudio.CoreAudioApi.AudioClientShareMode.Shared, 100);
-            wasapiOutDevice.Init(mainOutputStream);
-            wasapiOutDevice.Play();
+            logger.Info("Playing sound");
+            try
+            {
+                mainOutputStream = CreateInputStream("C:\\Program Files (x86)\\James\\My Product Name\\Sound\\chime-mid.mp3");
+                wasapiOutDevice = new WasapiOut(NAudio.CoreAudioApi.AudioClientShareMode.Shared, 100);                
+                wasapiOutDevice.Init(mainOutputStream);
+                wasapiOutDevice.Play();
+            }
+            catch (Exception ex)
+            {
+                logger.Error("Failed to play sound: " + ex.Message);
+            }
             //CloseWaveOut();
                        
         }
@@ -68,13 +73,14 @@ namespace smallsManager
             WaveChannel32 inputStream;
             if (fileName.EndsWith(".mp3"))
             {
-                WaveStream mp3Reader = new Mp3FileReader(fileName);
-                inputStream = new WaveChannel32(mp3Reader);
+                WaveStream mp3Reader = new Mp3FileReader(fileName);         
+                inputStream = new  WaveChannel32(mp3Reader);
             }
             else
             {
                 throw new InvalidOperationException("Unsupported extension");
             }
+            
             volumeStream = inputStream;
             return volumeStream;
         }
