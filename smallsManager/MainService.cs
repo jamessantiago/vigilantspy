@@ -7,24 +7,26 @@ using System.Linq;
 using System.ServiceProcess;
 using System.Text;
 using System.Threading.Tasks;
-using NAudio;
-using NAudio.Wave;
 using NLog;
 
 namespace smallsManager
 {
     public partial class MainService : ServiceBase
     {
+        #region Properties
+
         System.Timers.Timer mainTimer;
         Logger logger = LogManager.GetLogger("MainService");
-        WasapiOut wasapiOutDevice;
-        WaveStream mainOutputStream;
-        WaveChannel32 volumeStream;
+
+        #endregion Properties
+
+        #region Service Control
 
         public MainService()
         {
             InitializeComponent();
         }
+
         public void Start()
         {
             OnStart(null);
@@ -40,72 +42,37 @@ namespace smallsManager
         {
         }
 
+        #endregion Service Control
+
+        #region Methods
+
         private void InitializeMainTimer()
         {
             if (mainTimer == null)
             {
                 mainTimer = new System.Timers.Timer(30000);
-                mainTimer.Elapsed += new System.Timers.ElapsedEventHandler(ForcedTimer_Elapsed);
+                mainTimer.Elapsed += new System.Timers.ElapsedEventHandler(Timer_Elapsed);
                 mainTimer.Start();                
             }
         }
 
-        private void ForcedTimer_Elapsed(object state, System.Timers.ElapsedEventArgs e)
+        private void Timer_Elapsed(object state, System.Timers.ElapsedEventArgs e)
         {
-            logger.Info("Playing sound");
+            logger.Debug("Running tasks");
             try
             {
-                mainOutputStream = CreateInputStream("C:\\Program Files (x86)\\James\\My Product Name\\Sound\\chime-mid.mp3");
-                wasapiOutDevice = new WasapiOut(NAudio.CoreAudioApi.AudioClientShareMode.Shared, 100);                
-                wasapiOutDevice.Init(mainOutputStream);
-                wasapiOutDevice.Play();
+                var isOnBattery = WmiHelper.IsPowerOnline();
+                if (!isOnBattery)
+                    logger.Error("I need power!");
             }
             catch (Exception ex)
             {
-                logger.Error("Failed to play sound: " + ex.Message);
+                logger.Error("Failed to run task: " + ex.Message);
             }
-            //CloseWaveOut();
-                       
         }
 
-        private WaveStream CreateInputStream(string fileName)
-        {
-            WaveChannel32 inputStream;
-            if (fileName.EndsWith(".mp3"))
-            {
-                WaveStream mp3Reader = new Mp3FileReader(fileName);         
-                inputStream = new  WaveChannel32(mp3Reader);
-            }
-            else
-            {
-                throw new InvalidOperationException("Unsupported extension");
-            }
-            
-            volumeStream = inputStream;
-            return volumeStream;
-        }
+        #endregion Methods
 
-        private void CloseWaveOut()
-        {
-            if (wasapiOutDevice != null)
-            {
-                wasapiOutDevice.Stop();
-            }
-            if (mainOutputStream != null)
-            {
-                // this one really closes the file and ACM conversion
-                volumeStream.Close();
-                volumeStream = null;
-                // this one does the metering stream
-                mainOutputStream.Close();
-                mainOutputStream = null;
-            }
-            if (wasapiOutDevice != null)
-            {
-                wasapiOutDevice.Dispose();
-                wasapiOutDevice = null;
-            }
-        }
 
     }
 }
