@@ -18,7 +18,7 @@ namespace smallsManager
         {
             Logger logger = LogManager.GetLogger("Program");
             logger.Info("smalls manager is starting up");
-            if (!Environment.UserInteractive)
+            if (Environment.UserInteractive)
             {
                 logger.Debug("starting in interactive mode 1");
                 MainService service = new MainService();

@@ -32,6 +32,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="agsXMPP, Version=1.1.1.0, Culture=neutral, PublicKeyToken=ff839b81f1debe86, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>libs\agsXMPP.dll</HintPath>
+    </Reference>
+    <Reference Include="agsXmppNlogTarget, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>libs\agsXmppNlogTarget.dll</HintPath>
+    </Reference>
     <Reference Include="Growl.Connector, Version=2.0.0.0, Culture=neutral, PublicKeyToken=980c2339411be384, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Growl.0.6\lib\Growl.Connector.dll</HintPath>
@@ -69,6 +77,9 @@
     <Compile Include="WmiHelper.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="libs\agsXMPP.dll" />
+    <Content Include="libs\agsXmppNlogTarget.dll" />
+    <Content Include="libs\agsXmppNlogTarget.pdb" />
     <Content Include="license.txt" />
     <None Include="App.config" />
     <Content Include="NLog.config">
