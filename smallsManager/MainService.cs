@@ -59,7 +59,6 @@ namespace smallsManager
         private void Timer_Elapsed(object state, System.Timers.ElapsedEventArgs e)
         {
             logger.Debug("Running tasks");
-            logger.Info("Running tasks");
             try
             {
                 var isOnBattery = WmiHelper.IsPowerOnline();
