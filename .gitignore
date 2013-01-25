@@ -12,7 +12,7 @@ TestResults
 *.suo
 *.user
 *.sln.docstates
-NLog.config
+*NLog.config
 
 # Build results
 [Dd]ebug/
