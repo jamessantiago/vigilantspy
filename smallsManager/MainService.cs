@@ -17,6 +17,7 @@ namespace smallsManager
 
         System.Timers.Timer mainTimer;
         Logger logger = LogManager.GetLogger("MainService");
+        ThresholdWatcher twatcher;
 
         #endregion Properties
 
@@ -61,9 +62,23 @@ namespace smallsManager
             logger.Debug("Running tasks");
             try
             {
+                //check if system is on power
+
                 var isOnBattery = WmiHelper.IsPowerOnline();
                 if (!isOnBattery)
                     logger.Error("I need power!");
+
+                //cpu threshold alert
+
+                if (twatcher == null)
+                {
+                    twatcher = new ThresholdWatcher();
+                }
+                if (twatcher.AddSample(PerformanceHelper.GetTotalCpuUsage()) == true)
+                {
+                    logger.Error("CPU usage has exceeded the 90% threshold for the past five minutes");
+                    twatcher.Reset();
+                }
             }
             catch (Exception ex)
             {

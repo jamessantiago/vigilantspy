@@ -66,6 +66,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helpers\PerformanceHelper.cs" />
     <Compile Include="MainService.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -74,7 +75,8 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WmiHelper.cs" />
+    <Compile Include="Helpers\WmiHelper.cs" />
+    <Compile Include="ThresholdWatcher.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="libs\agsXMPP.dll" />
@@ -85,6 +87,10 @@
     <Content Include="NLog.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
+    </Content>
+    <Content Include="NLog_placeholder.config">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
